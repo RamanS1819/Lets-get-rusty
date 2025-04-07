@@ -9,7 +9,36 @@ struct User {
     active: bool,
 }
 
+///// example usecase
+#[derive(Debug)]    //-> here Debug is a trait that allows us to print the struct in a readable format
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
 
+// implement block has the functions and methods that are associated with the struct
+impl Rectangle {
+    // we can also define methods for the struct using impl
+    // this is similar to classes in other programming languages
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    // inside the impl block we can also define assosiated functions
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+}
+
+// structs allows us multiple implementation blocks
+impl Rectangle {
+    fn square(size: u32) -> Rectangle {
+        Rectangle {
+            width: size,
+            height: size
+        }
+    }
+}
 
 fn main() {
     let mut user1 = User {
@@ -53,6 +82,37 @@ fn main() {
 
     struct Point(u32, u32, u32);
 
+
+
+    ///// example usecase
+    let rect = Rectangle {
+        width: 30,
+        height: 50
+    };
+
+    let rect1 = Rectangle {
+        width: 20,
+        height: 40
+    };
+
+    let rect2 = Rectangle {
+        width: 20,
+        height: 60
+    };
+
+    let rect3 = Rectangle::square(25);
+
+    println!("rect can hold rect1: {}", rect.can_hold(&rect1));
+    println!("rect can hold rect2: {}", rect.can_hold(&rect2));
+
+    println!("rect: {:#?}", rect);
+    // we can also use the dot notation to get the values of the struct
+
+    println!(
+        "The area of the rectangle is {} square pixels.", 
+        rect.area()
+    );
+
 }
 
 
@@ -68,3 +128,12 @@ fn build_user(email: String, username: String) -> User {
         sign_in_count: 1
     }
 }
+
+
+// when using impl we don't need this function
+/* 
+///// example usecase
+fn area(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
+}
+    */
